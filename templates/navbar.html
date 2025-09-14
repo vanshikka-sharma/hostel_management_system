@@ -5,58 +5,87 @@
     color: #fff;
     font-family: 'Inter', sans-serif;
     box-shadow: 0 4px 16px rgba(99,102,241,0.08);
-    padding: 1.1rem 0 1rem 0;
+    padding: 0.8rem 0;
     border-bottom-left-radius: 1.2rem;
     border-bottom-right-radius: 1.2rem;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 .navbar-container {
-    
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
-    gap: 2.2rem;
 }
 .navbar-title {
-    font-size: 2.1rem;
+    font-size: 1.8rem;
     font-weight: 800;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     color: #fff;
     text-shadow: 0 2px 12px rgba(99,102,241,0.18);
-    margin-right: 2.2rem;
+    margin-right: 2rem;
     border-right: 2px solid rgba(255,255,255,0.18);
-    padding-right: 2.2rem;
+    padding-right: 2rem;
+    flex-shrink: 0;
 }
 .navbar-links {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 1.2rem;
+    flex-wrap: wrap;
+    gap: 0.8rem;
     align-items: center;
-    padding-bottom: 0.2rem;
-    width: 100%;
-    white-space: nowrap;
+    justify-content: flex-end;
+    flex: 1;
+    margin-left: 1rem;
 }
 .navbar-link {
     color: #fff;
     text-decoration: none;
-    font-weight: 600;
-    font-size: 0.92rem;
-    padding: 0.32rem 0.9rem;
-    border-radius: 0.7rem;
-    transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
     position: relative;
     white-space: nowrap;
-    box-shadow: 0 1px 4px rgba(99,102,241,0.08);
+    border: 1px solid transparent;
 }
 .navbar-link:hover {
-    background: rgba(255,255,255,0.18);
-    color: #e0e7ff;
-    transform: scale(1.08);
-    box-shadow: 0 2px 12px rgba(99,102,241,0.18);
-    border: 1px solid #fff;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border-color: rgba(255,255,255,0.3);
+    transform: translateY(-1px);
+}
+@media (max-width: 1024px) {
+    .navbar-container {
+        padding: 0 1rem;
+    }
+    .navbar-title {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        padding-right: 1rem;
+    }
+    .navbar-links {
+        gap: 0.5rem;
+    }
+    .navbar-link {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.85rem;
+    }
+}
+@media (max-width: 768px) {
+    .navbar-title {
+        font-size: 1.3rem;
+        margin-right: 0.8rem;
+        padding-right: 0.8rem;
+    }
+    .navbar-links {
+        justify-content: center;
+    }
 }
 </style>
 <nav class="navbar">
@@ -67,10 +96,14 @@
             <a href="/Mess/" class="navbar-link">Mess</a>
             <a href="/complaint/" class="navbar-link">Complaints</a>
             <a href="/hostel/" class="navbar-link">Hostel</a>
+            {% if request.user.is_authenticated and request.user.role != 'student' %}
             <a href="/inventory/" class="navbar-link">Inventory</a>
+            {% endif %}
             <a href="/notice/" class="navbar-link">Notice</a>
             <a href="/outing/list/" class="navbar-link">Outing</a>
+            {% if request.user.is_authenticated and request.user.role != 'student' %}
             <a href="/visitors/" class="navbar-link">Visitors</a>
+            {% endif %}
             {% if request.user.is_authenticated %}
             <a href="/parcel/history/" class="navbar-link">Parcel</a>
             {% if not request.user.role == 'student' %}
