@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.notice-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80vh;
+    background: linear-gradient(120deg, #e0e7ff 0%, #f0fdfa 100%);
+    padding-top: 40px;
+}
+.notice-card {
+    background: #fff;
+    border-radius: 2rem;
+    box-shadow: 0 8px 32px rgba(79,70,229,0.10);
+    width: 100%;
+    max-width: 520px;
+    padding: 2.5rem 2rem 2rem 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+.notice-title {
+    text-align: center;
+    color: #4f46e5;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+.add-btn {
+    display: block;
+    width: 100%;
+    background: linear-gradient(90deg, #6366f1 0%, #06b6d4 100%);
+    color: #fff;
+    font-weight: 700;
+    padding: 0.85rem;
+    border-radius: 1rem;
+    font-size: 1.15rem;
+    box-shadow: 0 2px 8px rgba(79,70,229,0.10);
+    border: none;
+    margin-bottom: 1.5rem;
+    transition: background 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+.add-btn:hover {
+    background: linear-gradient(90deg, #4338ca 0%, #0ea5e9 100%);
+    box-shadow: 0 4px 16px rgba(79,70,229,0.15);
+}
+.notice-list {
+    margin-top: 1rem;
+    width: 100%;
+}
+.notice-item {
+    background: #f8fafc;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(79,70,229,0.05);
+    padding: 1.2rem 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 1.08rem;
+    color: #374151;
+    position: relative;
+}
+.notice-date {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    color: #6366f1;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+</style>
+<div class="notice-container">
+    <div class="notice-card">
+        <div class="notice-title">All Notices</div>
+        <a href="{% url 'notice:add' %}" class="add-btn">Add Notice</a>
+        <div class="notice-list">
+            {% for notice in notices %}
+            <div class="notice-item">
+                <span class="notice-date">{{ notice.created_at|date:'d M Y, H:i' }}</span>
+                {{ notice.text }}
+            </div>
+            {% empty %}
+            <div style="text-align:center; color:#ef4444;">No notices found.</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
