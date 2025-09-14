@@ -1,46 +1,76 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 .navbar {
-    background: #4f46e5;
+    background: linear-gradient(90deg, #6366f1 0%, #4f46e5 100%);
     color: #fff;
     font-family: 'Inter', sans-serif;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    padding: 1rem 0;
+    box-shadow: 0 4px 16px rgba(99,102,241,0.08);
+    padding: 1.1rem 0 1rem 0;
+    border-bottom-left-radius: 1.2rem;
+    border-bottom-right-radius: 1.2rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 .navbar-container {
-    max-width: 1200px;
+    
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 0 2rem;
+    gap: 2.2rem;
 }
 .navbar-title {
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(99,102,241,0.18);
+    margin-right: 2.2rem;
+    border-right: 2px solid rgba(255,255,255,0.18);
+    padding-right: 2.2rem;
 }
 .navbar-links {
     display: flex;
-    gap: 2rem;
+    flex-wrap: nowrap;
+    gap: 1.2rem;
+    align-items: center;
+    padding-bottom: 0.2rem;
+    width: 100%;
+    white-space: nowrap;
 }
 .navbar-link {
     color: #fff;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 1.1rem;
-    transition: color 0.2s;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 0.32rem 0.9rem;
+    border-radius: 0.7rem;
+    transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
+    position: relative;
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(99,102,241,0.08);
 }
 .navbar-link:hover {
-    color: #c7d2fe;
+    background: rgba(255,255,255,0.18);
+    color: #e0e7ff;
+    transform: scale(1.08);
+    box-shadow: 0 2px 12px rgba(99,102,241,0.18);
+    border: 1px solid #fff;
 }
 </style>
 <nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-title">Campus Hostel</div>
         <div class="navbar-links">
-            <a href="#" class="navbar-link">Home</a>
+            <a href="/" class="navbar-link">Home</a>
             <a href="/Mess/" class="navbar-link">Mess</a>
+            <a href="/complaint/" class="navbar-link">Complaints</a>
+            <a href="/hostel/" class="navbar-link">Hostel</a>
+            <a href="/inventory/" class="navbar-link">Inventory</a>
+            <a href="/notice/" class="navbar-link">Notice</a>
+            <a href="/outing/list/" class="navbar-link">Outing</a>
+            <a href="/visitors/" class="navbar-link">Visitors</a>
             {% if request.user.is_authenticated %}
             <a href="/parcel/history/" class="navbar-link">Parcel</a>
             {% if not request.user.role == 'student' %}

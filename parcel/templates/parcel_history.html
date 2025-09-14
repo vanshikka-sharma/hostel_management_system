@@ -103,7 +103,13 @@
 </style>
 <div class="parcel-container">
     <div class="parcel-card">
-        <div class="parcel-title">Parcel History</div>
+        <div class="flex justify-between items-center mb-2">
+            <div class="parcel-title">Parcel History</div>
+            <div class="flex gap-2">
+                <a href="{% url 'home' %}" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-lg hover:bg-indigo-200 font-semibold" style="text-decoration:none;">Go to Home</a>
+                <a href="/parcel/" class="bg-teal-100 text-teal-700 px-4 py-2 rounded-lg hover:bg-teal-200 font-semibold" style="text-decoration:none;">Go to Parcel</a>
+            </div>
+        </div>
         <div class="search-box">
             <input type="text" id="searchInput" class="search-input" placeholder="Search by name or room no..." onkeyup="filterTable()">
             <button class="search-btn" onclick="filterTable()">Search</button>
