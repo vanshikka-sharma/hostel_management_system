@@ -1,46 +1,89 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 .allotment-form {
-    max-width: 500px;
-    margin: 40px auto;
+    max-width: 480px;
+    margin: 48px auto;
     background: #fff;
     border-radius: 1.5rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    padding: 2rem 2.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    font-family: 'Inter', Arial, sans-serif;
 }
 .allotment-form h2 {
     text-align: center;
     color: #4f46e5;
-    font-size: 2rem;
+    font-size: 2.1rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+}
+.form-group {
+    margin-bottom: 1.3rem;
+}
+label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    color: #374151;
+    font-size: 1.05rem;
+}
+input, select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.7rem;
+    background: #f7f9fc;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+input:focus, select:focus {
+    border-color: #6366f1;
+    outline: none;
 }
 .btn {
     display: block;
     width: 100%;
-    background: #6366f1;
+    background: linear-gradient(90deg, #6366f1 60%, #4f46e5 100%);
     color: #fff;
     font-weight: 600;
-    padding: 0.9rem;
+    padding: 0.95rem;
     border: none;
     border-radius: 0.7rem;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     cursor: pointer;
-    margin-top: 1.2rem;
-    box-shadow: 0 5px 15px rgba(99,102,241,0.08);
+    margin-top: 1.5rem;
+    box-shadow: 0 5px 15px rgba(99,102,241,0.10);
     transition: background 0.2s, transform 0.2s;
+    letter-spacing: 0.5px;
 }
 .btn:hover {
-    background: #4f46e5;
+    background: linear-gradient(90deg, #4f46e5 60%, #6366f1 100%);
     transform: scale(1.03);
+}
+.form-title {
+    text-align: center;
+    color: #6366f1;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 1.2rem;
 }
 </style>
 <div class="allotment-form">
     <h2>Hostel Allotment for Room {{ room_number }}</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="form-title">Fill the details below to allot this room</div>
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="errorlist">{{ field.errors|striptags }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
         <button type="submit" class="btn">Allot Room</button>
     </form>
 </div>

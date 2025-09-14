@@ -2,7 +2,9 @@ from django import forms
 from .models import HostelAllotment, User
 
 class HostelAllotmentForm(forms.ModelForm):
-    user = forms.ModelChoiceField(queryset=User.objects.filter(role='student'), label='Select Student')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['user'].queryset = User.objects.filter(role='student')
     security_fees = forms.DecimalField(max_digits=8, decimal_places=2)
     allotment_fees = forms.DecimalField(max_digits=8, decimal_places=2)
 
