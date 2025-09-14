@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="max-width:500px;margin:40px auto;background:#fff;padding:2rem;border-radius:1rem;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+    <a href="/visitors/record/" style="display:block;width:100%;background:#6366f1;color:#fff;font-weight:600;padding:0.9rem;border:none;border-radius:0.7rem;font-size:1.1rem;cursor:pointer;box-shadow:0 5px 15px rgba(99,102,241,0.08);text-align:center;text-decoration:none;margin-bottom:1.2rem;transition:background 0.2s,transform 0.2s;">Record New Visitor</a>
+    <h2 style="color:#4f46e5;">Visitor History</h2>
+    <form method="get" style="margin-bottom:2rem;">
+        <label for="date" style="font-weight:500;">Select Date:</label>
+        <input type="date" id="date" name="date" value="{{ selected_date }}" required style="margin-left:0.7rem;padding:0.5rem 1rem;border:1px solid #d1d5db;border-radius:0.7rem;">
+        <button type="submit" style="background:#4f46e5;color:#fff;padding:0.7rem 1.5rem;border:none;border-radius:0.7rem;margin-left:0.7rem;">Show Visitors</button>
+    </form>
+    {% if visitors %}
+    <table style="width:100%;border-collapse:collapse;margin-top:1rem;">
+            <thead>
+                <tr style="background:#f3f4f6;">
+                    <th style="padding:0.7rem;border-bottom:1px solid #e5e7eb;">Name</th>
+                    <th style="padding:0.7rem;border-bottom:1px solid #e5e7eb;">Purpose</th>
+                    <th style="padding:0.7rem;border-bottom:1px solid #e5e7eb;">Aadhaar</th>
+                    <th style="padding:0.7rem;border-bottom:1px solid #e5e7eb;">Room</th>
+                    <th style="padding:0.7rem;border-bottom:1px solid #e5e7eb;">Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for visitor in visitors %}
+                <tr>
+                    <td style="padding:0.7rem;border-bottom:1px solid #e5e7eb;">{{ visitor.visitor_name }}</td>
+                    <td style="padding:0.7rem;border-bottom:1px solid #e5e7eb;">{{ visitor.visitor_purpose }}</td>
+                    <td style="padding:0.7rem;border-bottom:1px solid #e5e7eb;">{{ visitor.adhar_card_number }}</td>
+                    <td style="padding:0.7rem;border-bottom:1px solid #e5e7eb;">{{ visitor.room_allotment.room_number }}</td>
+                    <td style="padding:0.7rem;border-bottom:1px solid #e5e7eb;">{{ visitor.visit_time|date:'H:i' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No visitors found for this date.</p>
+    {% endif %}
+</div>
+{% endblock %}
