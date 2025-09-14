@@ -8,6 +8,11 @@ def mess_timetable(request):
     return render(request, "mess/templates/mess_timetable.html", {"menu": menu})
 
 def add_menu(request, pk=None):
+    user = request.user
+    if user.is_authenticated and getattr(user, 'role', None) == 'student':
+        from django.contrib import messages
+        messages.info(request, 'Students cannot access mess add/update page.')
+        return redirect('home')
     if pk:  # Update
         menu_item = get_object_or_404(MessMenu, pk=pk)
     else:   # Add
@@ -24,5 +29,10 @@ def add_menu(request, pk=None):
     return render(request, "mess/templates/add_menu.html", {"form": form})
 
 def mess_inventory(request):
+    user = request.user
+    if user.is_authenticated and getattr(user, 'role', None) == 'student':
+        from django.contrib import messages
+        messages.info(request, 'Students cannot access mess inventory page.')
+        return redirect('home')
     items = Item.objects.filter(category='Mess')
     return render(request, "mess/templates/mess_inventory.html", {"items": items})

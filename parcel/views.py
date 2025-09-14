@@ -5,6 +5,8 @@ from django.contrib import messages
 
 # Create your views here.
 def base(request):
+    if hasattr(request.user, 'role') and request.user.role == 'student':
+        return redirect('parcel:history')
     # Show all students with room numbers
     students = User.objects.filter(role='student').values('id', 'name', 'hostel_allotments__room_number')
     # Remove duplicates and get latest room number
@@ -21,6 +23,8 @@ def history(request):
     return render(request, 'parcel_history.html', {'parcels': parcels})
 
 def send_parcel(request):
+    if hasattr(request.user, 'role') and request.user.role == 'student':
+        return redirect('parcel:history')
     if request.method == 'POST':
         ids = request.POST.getlist('student_ids')
         for user_id in ids:

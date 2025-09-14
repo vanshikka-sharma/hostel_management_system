@@ -1,245 +1,260 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Hostel - Home</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* A light, elegant blue-gray */
-        }
-        .section-box {
-            background-color: #ffffff;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .section-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-        .card {
-            background-color: #f7f9fc;
-            border-radius: 1rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-        .colored-box {
-            width: 100%;
-            height: 200px;
-            background-color: #a4b3c4; /* A consistent gray-blue for placeholders */
-            border-radius: 1rem;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            animation: fadeIn 0.3s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .close-button {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            transition: color 0.2s ease;
-        }
-        .close-button:hover,
-        .close-button:focus {
-            color: #333;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body class="text-gray-800">
+{% extends "base.html" %}
+{% block content %}
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-    <!-- Header Section -->
-    <header class="bg-indigo-700 text-white shadow-lg p-6">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-3xl font-bold">Campus Hostel</h1>
-            <nav>
-                <a href="#" class="mx-3 hover:text-indigo-200 transition duration-300">Home</a>
-                <a href="#" class="mx-3 hover:text-indigo-200 transition duration-300">About</a>
-                <a href="#" class="mx-3 hover:text-indigo-200 transition duration-300">Gallery</a>
-                <a href="#" class="mx-3 hover:text-indigo-200 transition duration-300">Contact</a>
-            </nav>
-        </div>
-    </header>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f0f4f8;
+        /* A light, elegant blue-gray */
+    }
 
-    <!-- Hero Section -->
-    <section class="py-20 text-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-indigo-500 opacity-20 transform -skew-y-3 -rotate-2 origin-top-left z-0"></div>
-        <div class="relative z-10 container mx-auto px-4">
-            <h2 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-4">
-                Your Home Away From Home
-            </h2>
-            <p class="text-xl text-gray-600 mb-8">
-                Located conveniently inside the campus, our hostel provides a safe and vibrant environment for students.
-            </p>
-            <button id="ctaButton" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50">
-                Learn More
-            </button>
-        </div>
-    </section>
+    .section-box {
+        background-color: #ffffff;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-    <!-- Features Section -->
-    <section class="py-16">
-        <div class="container mx-auto px-4">
-            <h3 class="text-4xl font-bold text-center mb-12 text-gray-900">Our Amenities</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Rooms -->
-                <div class="section-box p-6 md:p-8">
-                    <div class="colored-box mb-4 bg-indigo-300"></div>
-                    <h4 class="text-2xl font-semibold mb-2 text-indigo-800">Accommodation</h4>
-                    <p class="text-gray-600">We offer two types of rooms: **Single rooms** for privacy and **Dormitory rooms** for a communal living experience. Both are well-maintained and comfortable.</p>
-                </div>
-                <!-- Facilities -->
-                <div class="section-box p-6 md:p-8">
-                    <div class="colored-box mb-4 bg-teal-300"></div>
-                    <h4 class="text-2xl font-semibold mb-2 text-teal-800">Facilities</h4>
-                    <p class="text-gray-600">Enjoy our **party hall** for celebrations and a dedicated **projector room** for movies and presentations. The hostel also has a beautiful inner **garden**.</p>
-                </div>
-                <!-- Games & Recreation -->
-                <div class="section-box p-6 md:p-8">
-                    <div class="colored-box mb-4 bg-red-300"></div>
-                    <h4 class="text-2xl font-semibold mb-2 text-red-800">Recreation</h4>
-                    <p class="text-gray-600">A wide range of **indoor and outdoor games** are available to ensure you can relax and have fun with your friends. Our vibrant common areas are a hub of activity.</p>
-                </div>
+    .section-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .card {
+        background-color: #f7f9fc;
+        border-radius: 1rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .colored-box {
+        width: 100%;
+        height: 200px;
+        background-color: #a4b3c4;
+        /* A consistent gray-blue for placeholders */
+        border-radius: 1rem;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 1.5rem;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        transition: color 0.2s ease;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+        color: #333;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+
+
+
+<!-- Hero Section -->
+<section class="py-20 text-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-indigo-500 opacity-20 transform -skew-y-3 -rotate-2 origin-top-left z-0"></div>
+    <div class="relative z-10 container mx-auto px-4">
+        <h2 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-4">
+            Your Home Away From Home
+        </h2>
+        <p class="text-xl text-gray-600 mb-8">
+            Located conveniently inside the campus, our hostel provides a safe and vibrant environment for students.
+        </p>
+        <button id="ctaButton"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50">
+            Learn More
+        </button>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-16">
+    <div class="container mx-auto px-4">
+        <h3 class="text-4xl font-bold text-center mb-12 text-gray-900">Our Amenities</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Rooms -->
+            <div class="section-box p-6 md:p-8">
+                <div class="colored-box mb-4 bg-indigo-300"></div>
+                <h4 class="text-2xl font-semibold mb-2 text-indigo-800">Accommodation</h4>
+                <p class="text-gray-600">We offer two types of rooms: **Single rooms** for privacy and **Dormitory
+                    rooms** for a communal living experience. Both are well-maintained and comfortable.</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Events Section -->
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <h3 class="text-4xl font-bold text-center mb-12 text-gray-900">Hostel Life & Events</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div class="section-box p-6 md:p-8">
-                    <h4 class="text-2xl font-semibold mb-4 text-gray-800">A Year of Celebrations</h4>
-                    <p class="text-gray-600 leading-relaxed mb-4">
-                        Life at our hostel is never dull! We celebrate a variety of **hostel events**, festivals, and special occasions throughout the year, fostering a strong sense of community and camaraderie among residents.
-                    </p>
-                    <div class="colored-box bg-orange-300"></div>
-                </div>
-                <div class="colored-box bg-orange-400"></div>
+            <!-- Facilities -->
+            <div class="section-box p-6 md:p-8">
+                <div class="colored-box mb-4 bg-teal-300"></div>
+                <h4 class="text-2xl font-semibold mb-2 text-teal-800">Facilities</h4>
+                <p class="text-gray-600">Enjoy our **party hall** for celebrations and a dedicated **projector
+                    room** for movies and presentations. The hostel also has a beautiful inner **garden**.</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Staff & Security Section -->
-    <section class="py-16">
-        <div class="container mx-auto px-4">
-            <h3 class="text-4xl font-bold text-center mb-12 text-gray-900">Our Dedicated Team</h3>
-            <p class="text-xl text-center text-gray-600 mb-8 max-w-2xl mx-auto">
-                Our hostel is managed by a team of dedicated professionals who ensure a safe, clean, and healthy environment.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Warden -->
-                <div class="card p-6 text-center">
-                    <div class="colored-box mb-4 bg-gray-200"></div>
-                    <h5 class="text-xl font-semibold text-gray-800">Chief Warden & Warden</h5>
-                    <p class="text-sm text-gray-600 mt-2">Our wardens are available to assist students and ensure smooth operations.</p>
-                </div>
-                <!-- Staff -->
-                <div class="card p-6 text-center">
-                    <div class="colored-box mb-4 bg-gray-200"></div>
-                    <h5 class="text-xl font-semibold text-gray-800">Staff Members</h5>
-                    <p class="text-sm text-gray-600 mt-2">A team of **3 chefs** and **2 cleaning staff** keep the hostel running efficiently.</p>
-                </div>
-                <!-- Security -->
-                <div class="card p-6 text-center">
-                    <div class="colored-box mb-4 bg-gray-200"></div>
-                    <h5 class="text-xl font-semibold text-gray-800">Security</h5>
-                    <p class="text-sm text-gray-600 mt-2">A dedicated **security guard** and **surveillance cameras** ensure your safety 24/7.</p>
-                </div>
-                <!-- Medical -->
-                <div class="card p-6 text-center">
-                    <div class="colored-box mb-4 bg-gray-200"></div>
-                    <h5 class="text-xl font-semibold text-gray-800">Medical Facility</h5>
-                    <p class="text-sm text-gray-600 mt-2">We provide basic **medical facilities** for any immediate needs of the residents.</p>
-                </div>
+            <!-- Games & Recreation -->
+            <div class="section-box p-6 md:p-8">
+                <div class="colored-box mb-4 bg-red-300"></div>
+                <h4 class="text-2xl font-semibold mb-2 text-red-800">Recreation</h4>
+                <p class="text-gray-600">A wide range of **indoor and outdoor games** are available to ensure you
+                    can relax and have fun with your friends. Our vibrant common areas are a hub of activity.</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Architectural Section -->
-    <section class="py-16 bg-gray-100">
-        <div class="container mx-auto px-4 text-center">
-            <h3 class="text-4xl font-bold mb-6 text-gray-900">Our Unique U-Shaped Building</h3>
-            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                Our two hostel buildings are uniquely designed in a U-shape, creating a central courtyard that houses our beautiful garden. This layout fosters an open and connected community.
-            </p>
-            <div class="colored-box bg-purple-300 md:h-96"></div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white p-6 mt-16">
-        <div class="container mx-auto text-center">
-            <p>&copy; 2024 Campus Hostel. All Rights Reserved.</p>
-        </div>
-    </footer>
-    
-    <!-- Modal for Pop-up -->
-    <div id="infoModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <p class="text-xl font-semibold">Welcome to our Hostel!</p>
-            <p class="mt-4 text-gray-600">This is a simple pop-up to demonstrate an interactive element on the page.</p>
         </div>
     </div>
-    
-    <script>
-        // Get the modal and the button that opens it
-        const modal = document.getElementById('infoModal');
-        const btn = document.getElementById('ctaButton');
-        const span = document.getElementsByClassName('close-button')[0];
-    
-        // When the user clicks the button, open the modal
-        btn.onclick = function() {
-            modal.style.display = 'flex';
-        }
-    
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
+</section>
+
+<!-- Events Section -->
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <h3 class="text-4xl font-bold text-center mb-12 text-gray-900">Hostel Life & Events</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="section-box p-6 md:p-8">
+                <h4 class="text-2xl font-semibold mb-4 text-gray-800">A Year of Celebrations</h4>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Life at our hostel is never dull! We celebrate a variety of **hostel events**, festivals, and
+                    special occasions throughout the year, fostering a strong sense of community and camaraderie
+                    among residents.
+                </p>
+                <div class="colored-box bg-orange-300"></div>
+            </div>
+            <div class="colored-box bg-orange-400"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Staff & Security Section -->
+<section class="py-16">
+    <div class="container mx-auto px-4">
+        <h3 class="text-4xl font-bold text-center mb-12 text-gray-900">Our Dedicated Team</h3>
+        <p class="text-xl text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+            Our hostel is managed by a team of dedicated professionals who ensure a safe, clean, and healthy
+            environment.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Warden -->
+            <div class="card p-6 text-center">
+                <div class="colored-box mb-4 bg-gray-200"></div>
+                <h5 class="text-xl font-semibold text-gray-800">Chief Warden & Warden</h5>
+                <p class="text-sm text-gray-600 mt-2">Our wardens are available to assist students and ensure smooth
+                    operations.</p>
+            </div>
+            <!-- Staff -->
+            <div class="card p-6 text-center">
+                <div class="colored-box mb-4 bg-gray-200"></div>
+                <h5 class="text-xl font-semibold text-gray-800">Staff Members</h5>
+                <p class="text-sm text-gray-600 mt-2">A team of **3 chefs** and **2 cleaning staff** keep the hostel
+                    running efficiently.</p>
+            </div>
+            <!-- Security -->
+            <div class="card p-6 text-center">
+                <div class="colored-box mb-4 bg-gray-200"></div>
+                <h5 class="text-xl font-semibold text-gray-800">Security</h5>
+                <p class="text-sm text-gray-600 mt-2">A dedicated **security guard** and **surveillance cameras**
+                    ensure your safety 24/7.</p>
+            </div>
+            <!-- Medical -->
+            <div class="card p-6 text-center">
+                <div class="colored-box mb-4 bg-gray-200"></div>
+                <h5 class="text-xl font-semibold text-gray-800">Medical Facility</h5>
+                <p class="text-sm text-gray-600 mt-2">We provide basic **medical facilities** for any immediate
+                    needs of the residents.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Architectural Section -->
+<section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4 text-center">
+        <h3 class="text-4xl font-bold mb-6 text-gray-900">Our Unique U-Shaped Building</h3>
+        <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            Our two hostel buildings are uniquely designed in a U-shape, creating a central courtyard that houses
+            our beautiful garden. This layout fosters an open and connected community.
+        </p>
+        <div class="colored-box bg-purple-300 md:h-96"></div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white p-6 mt-16">
+    <div class="container mx-auto text-center">
+        <p>&copy; 2024 Campus Hostel. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<!-- Modal for Pop-up -->
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <p class="text-xl font-semibold">Welcome to our Hostel!</p>
+        <p class="mt-4 text-gray-600">This is a simple pop-up to demonstrate an interactive element on the page.</p>
+    </div>
+</div>
+
+<script>
+    // Get the modal and the button that opens it
+    const modal = document.getElementById('infoModal');
+    const btn = document.getElementById('ctaButton');
+    const span = document.getElementsByClassName('close-button')[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = 'flex';
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = 'none';
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
             modal.style.display = 'none';
         }
-    
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-    </script>
-</body>
-</html>
+    }
+</script>
+{% endblock %}

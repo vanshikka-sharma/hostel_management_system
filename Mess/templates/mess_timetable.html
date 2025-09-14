@@ -11,7 +11,9 @@
   <header class="bg-indigo-700 text-white shadow-lg p-6">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-3xl font-bold">Mess Timetable</h1>
-      <a href="{% url 'add_menu' %}" class="bg-teal-500 px-4 py-2 rounded-lg hover:bg-teal-600">+ Add Menu</a>
+  {% if not request.user.is_authenticated or request.user.role != 'student' %}
+  <a href="{% url 'add_menu' %}" class="bg-teal-500 px-4 py-2 rounded-lg hover:bg-teal-600">+ Add Menu</a>
+  {% endif %}
     </div>
   </header>
 

@@ -12,6 +12,11 @@ def base(request):
     return render(request, 'notice_base.html', {'notices': notices})
 
 def add(request):
+    user = request.user
+    if user.is_authenticated and getattr(user, 'role', None) == 'student':
+        from django.contrib import messages
+        messages.info(request, 'Students cannot access the add notice page.')
+        return redirect('notice:base')
     if request.method == 'POST':
         text = request.POST.get('notice_text', '').strip()
         if text:

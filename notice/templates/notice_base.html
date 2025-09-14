@@ -74,7 +74,9 @@
 <div class="notice-container">
     <div class="notice-card">
         <div class="notice-title">All Notices</div>
-        <a href="{% url 'notice:add' %}" class="add-btn">Add Notice</a>
+    {% if not request.user.is_authenticated or request.user.role != 'student' %}
+    <a href="{% url 'notice:add' %}" class="add-btn">Add Notice</a>
+    {% endif %}
         <div class="notice-list">
             {% for notice in notices %}
             <div class="notice-item">
