@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.parcel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80vh;
+    background: linear-gradient(120deg, #e0e7ff 0%, #f0fdfa 100%);
+    padding-top: 40px;
+}
+.parcel-card {
+    background: #fff;
+    border-radius: 2rem;
+    box-shadow: 0 8px 32px rgba(79,70,229,0.10);
+    width: 100%;
+    max-width: 520px;
+    padding: 2.5rem 2rem 2rem 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+.parcel-title {
+    text-align: center;
+    color: #4f46e5;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+.search-box {
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.search-input {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border-radius: 0.7rem;
+    border: 1px solid #c7d2fe;
+    font-size: 1.08rem;
+    background: #f3f4f6;
+    color: #374151;
+    outline: none;
+    transition: border 0.2s;
+}
+.search-input:focus {
+    border: 1.5px solid #4f46e5;
+}
+.search-btn {
+    background: #4f46e5;
+    color: #fff;
+    border: none;
+    border-radius: 0.7rem;
+    padding: 0.6rem 1.2rem;
+    font-weight: 700;
+    font-size: 1.08rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.search-btn:hover {
+    background: #6366f1;
+}
+.parcel-list {
+    max-height: 340px;
+    overflow-y: auto;
+    background: #f8fafc;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(79,70,229,0.05);
+    padding: 1rem 0.5rem;
+    margin-bottom: 2.2rem;
+}
+.parcel-list ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.parcel-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 1.08rem;
+}
+.parcel-list li:last-child {
+    border-bottom: none;
+}
+.parcel-checkbox {
+    width: 1.3rem;
+    height: 1.3rem;
+    accent-color: #4f46e5;
+}
+.send-btn {
+    width: 100%;
+    background: linear-gradient(90deg, #6366f1 0%, #06b6d4 100%);
+    color: #fff;
+    font-weight: 700;
+    padding: 0.85rem;
+    border-radius: 1rem;
+    font-size: 1.15rem;
+    box-shadow: 0 2px 8px rgba(79,70,229,0.10);
+    border: none;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: background 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+.send-btn:hover {
+    background: linear-gradient(90deg, #4338ca 0%, #0ea5e9 100%);
+    box-shadow: 0 4px 16px rgba(79,70,229,0.15);
+}
+#message-area {
+    margin-top: 1.5rem;
+    color: #10b981;
+    font-weight: 600;
+    text-align: center;
+}
+</style>
+<div class="parcel-container">
+    <div class="parcel-card">
+        <div class="parcel-title">Send Parcel Notification</div>
+        <form id="parcelForm" method="post" action="{% url 'parcel:send_parcel' %}">
+            {% csrf_token %}
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by name or room no..." onkeyup="filterList()">
+                <button type="button" class="search-btn" onclick="filterList()">Search</button>
+            </div>
+            <div class="parcel-list">
+                <ul id="studentList">
+                    {% for student in students %}
+                    <li>
+                        <span>
+                            <strong>{{ student.name }}</strong>
+                            <span style="color:#6366f1;">(Room {{ student.room_number }})</span>
+                        </span>
+                        <input type="checkbox" class="parcel-checkbox" name="student_ids" value="{{ student.id }}">
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <button type="submit" class="send-btn">Send</button>
+        </form>
+        <div id="message-area">
+            {% if messages %}
+                {% for message in messages %}
+                    <div>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+function filterList() {
+    var input = document.getElementById('searchInput');
+    var filter = input.value.toLowerCase();
+    var ul = document.getElementById('studentList');
+    var lis = ul.getElementsByTagName('li');
+    for (var i = 0; i < lis.length; i++) {
+        var name = lis[i].getElementsByTagName('strong')[0].textContent.toLowerCase();
+        var room = lis[i].getElementsByTagName('span')[1].textContent.toLowerCase();
+        if (name.includes(filter) || room.includes(filter)) {
+            lis[i].style.display = '';
+        } else {
+            lis[i].style.display = 'none';
+        }
+    }
+}
+</script>
+{% endblock %}
