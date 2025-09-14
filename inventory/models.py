@@ -1,6 +1,9 @@
 from django.db import models
 
 class Item(models.Model):
+    # No custom save method needed
+    # No custom save method needed
+    # No custom save method needed
     CATEGORY_CHOICES = [
         ('electric','Electrical'),
         ('furniture','Furniture'),
@@ -13,10 +16,13 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=0)
     purchase_date = models.DateField()
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def total_value(self):
         return self.price * self.quantity
+
+    # No custom save method needed
 
     def __str__(self):
         return f"{self.name} ({self.category})"
@@ -29,9 +35,11 @@ class UsageRecord(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        # Only save usage record, do not modify item quantity
+        # Subtract used_quantity from item.quantity when usage is recorded
         if not self.pk:
             if self.used_quantity > self.item.quantity:
                 raise ValueError("Used quantity cannot be greater than available quantity.")
+            self.item.quantity -= self.used_quantity
+            self.item.save()
         super().save(*args, **kwargs)
 
