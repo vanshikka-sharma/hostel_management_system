@@ -5,7 +5,7 @@
   <header class="bg-indigo-700 text-white shadow-lg p-6">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-3xl font-bold">Mess Timetable</h1>
-  {% if not request.user.is_authenticated or request.user.role != 'student' %}
+  {% if request.user.is_authenticated and request.user.role != 'student' %}
   <a href="{% url 'add_menu' %}" class="bg-teal-500 px-4 py-2 rounded-lg hover:bg-teal-600">+ Add Menu</a>
   {% endif %}
     </div>
@@ -19,7 +19,9 @@
         <p><span class="font-semibold">Breakfast:</span> {{ item.breakfast }}</p>
         <p><span class="font-semibold">Lunch:</span> {{ item.lunch }}</p>
         <p><span class="font-semibold">Dinner:</span> {{ item.dinner }}</p>
-        <a href="{% url 'update_menu' item.id %}" class="mt-4 inline-block text-sm text-indigo-600 hover:underline">Edit</a>
+  {% if request.user.is_authenticated and request.user.role != 'student' %}
+  <a href="{% url 'update_menu' item.id %}" class="mt-4 inline-block text-sm text-indigo-600 hover:underline">Edit</a>
+  {% endif %}
       </div>
       {% empty %}
       <p>No menu available. Please add.</p>

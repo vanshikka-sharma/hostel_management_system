@@ -3,41 +3,34 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
     body {
         font-family: 'Inter', sans-serif;
         background-color: #f0f4f8;
         /* A light, elegant blue-gray */
     }
-
     .section-box {
         background-color: #ffffff;
         border-radius: 1.5rem;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
     .section-box:hover {
         transform: translateY(-5px);
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     }
-
     .card {
         background-color: #f7f9fc;
         border-radius: 1rem;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-
     .card:hover {
         transform: scale(1.03);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     }
-
     .colored-box {
         width: 100%;
         height: 200px;
         background-color: #a4b3c4;
-        /* A consistent gray-blue for placeholders */
         border-radius: 1rem;
     }
 
@@ -122,25 +115,28 @@
         <h3 class="text-4xl font-bold text-center mb-12 text-gray-900">Our Amenities</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Rooms -->
-            <div class="section-box p-6 md:p-8">
-                <div class="colored-box mb-4 bg-indigo-300"></div>
-                <h4 class="text-2xl font-semibold mb-2 text-indigo-800">Accommodation</h4>
-                <p class="text-gray-600">We offer two types of rooms: **Single rooms** for privacy and **Dormitory
-                    rooms** for a communal living experience. Both are well-maintained and comfortable.</p>
+                <div class="section-box p-6 md:p-8">
+                    <div class="mb-4 rounded-xl overflow-hidden shadow">
+                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Hostel Accommodation" style="width:100%;height:200px;object-fit:cover;">
+                    </div>
+                    <h4 class="text-2xl font-semibold mb-2 text-indigo-800">Accommodation</h4>
+                    <p class="text-gray-600">We offer two types of rooms: <strong>Single rooms</strong> for privacy and <strong>Dormitory rooms</strong> for a communal living experience. Both are well-maintained and comfortable.</p>
             </div>
             <!-- Facilities -->
-            <div class="section-box p-6 md:p-8">
-                <div class="colored-box mb-4 bg-teal-300"></div>
-                <h4 class="text-2xl font-semibold mb-2 text-teal-800">Facilities</h4>
-                <p class="text-gray-600">Enjoy our **party hall** for celebrations and a dedicated **projector
-                    room** for movies and presentations. The hostel also has a beautiful inner **garden**.</p>
+                <div class="section-box p-6 md:p-8">
+                    <div class="mb-4 rounded-xl overflow-hidden shadow">
+                        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Hostel Facilities" style="width:100%;height:200px;object-fit:cover;">
+                    </div>
+                    <h4 class="text-2xl font-semibold mb-2 text-teal-800">Facilities</h4>
+                    <p class="text-gray-600">Enjoy our <strong>party hall</strong> for celebrations and a dedicated <strong>projector room</strong> for movies and presentations. The hostel also has a beautiful inner <strong>garden</strong>.</p>
             </div>
             <!-- Games & Recreation -->
-            <div class="section-box p-6 md:p-8">
-                <div class="colored-box mb-4 bg-red-300"></div>
-                <h4 class="text-2xl font-semibold mb-2 text-red-800">Recreation</h4>
-                <p class="text-gray-600">A wide range of **indoor and outdoor games** are available to ensure you
-                    can relax and have fun with your friends. Our vibrant common areas are a hub of activity.</p>
+                <div class="section-box p-6 md:p-8">
+                    <div class="mb-4 rounded-xl overflow-hidden shadow">
+                        <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80" alt="Hostel Recreation" style="width:100%;height:200px;object-fit:cover;">
+                    </div>
+                    <h4 class="text-2xl font-semibold mb-2 text-red-800">Recreation</h4>
+                    <p class="text-gray-600">A wide range of <strong>indoor and outdoor games</strong> are available to ensure you can relax and have fun with your friends. Our vibrant common areas are a hub of activity.</p>
             </div>
         </div>
     </div>
@@ -158,7 +154,9 @@
                     special occasions throughout the year, fostering a strong sense of community and camaraderie
                     among residents.
                 </p>
-                <div class="colored-box bg-orange-300"></div>
+                    <div class="mb-4 rounded-xl overflow-hidden shadow">
+                        <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=600&q=80" alt="Hostel Celebrations" style="width:100%;height:200px;object-fit:cover;">
+                    </div>
             </div>
             <div class="colored-box bg-orange-400"></div>
         </div>
@@ -225,6 +223,9 @@
             our beautiful garden. This layout fosters an open and connected community.
         </p>
         <div class="colored-box bg-purple-300 md:h-96"></div>
+            <div class="mb-4 rounded-xl overflow-hidden shadow md:h-96">
+                <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" alt="Hostel Architecture" style="width:100%;height:100%;max-height:384px;object-fit:cover;">
+            </div>
     </div>
 </section>
 

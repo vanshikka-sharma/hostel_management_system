@@ -1,10 +1,69 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mx-auto px-6 py-10">
-  <form method="post" class="bg-white p-8 rounded-xl shadow space-y-6">
+<style>
+  .member-form-container {
+    max-width: 480px;
+    margin: 60px auto;
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 32px rgba(79,70,229,0.10);
+    padding: 2.5rem 2rem;
+    font-family: 'Inter', Arial, sans-serif;
+  }
+  .member-form-title {
+    text-align: center;
+    color: #4f46e5;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+  }
+  .member-form label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    color: #374151;
+  }
+  .member-form input, .member-form select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.7rem;
+    background: #f7f9fc;
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    transition: border-color 0.2s;
+  }
+  .member-form input:focus, .member-form select:focus {
+    border-color: #6366f1;
+    outline: none;
+  }
+  .member-form-btn {
+    display: block;
+    width: 100%;
+    background: linear-gradient(90deg, #6366f1 0%, #4f46e5 100%);
+    color: #fff;
+    font-weight: 600;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.7rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 1.2rem;
+    box-shadow: 0 5px 15px rgba(99,102,241,0.08);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .member-form-btn:hover {
+    background: #4f46e5;
+    transform: scale(1.03);
+  }
+</style>
+<div class="member-form-container">
+  <div class="member-form-title">Add Staff Member</div>
+  <form method="post" class="member-form">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700">Submit</button>
+    <button type="submit" class="member-form-btn">Submit</button>
   </form>
 </div>
 {% endblock %}

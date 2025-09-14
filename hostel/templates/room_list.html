@@ -74,9 +74,11 @@
             <input type="number" id="roomSearch" class="room-search" placeholder="Search room number..." min="501" max="550">
             <button class="search-btn" onclick="jumpToRoom()">Search</button>
         </div>
+            {% if request.user.is_authenticated and request.user.role != 'student' %}
             <a href="{% url 'room_allotment' %}" style="text-decoration:none;">
                 <button type="button" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 font-semibold ml-4 shadow">Allot Room</button>
             </a>
+            {% endif %}
     </div>
     <div class="scroll-list" id="roomScrollList">
         {% for room in room_data %}

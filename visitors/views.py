@@ -14,8 +14,12 @@ def record_visitor(request):
         form = VisitorRecordForm()
     return render(request, 'visitors/record_visitor.html', {'form': form})
 
+
 from django.utils import timezone
 from datetime import datetime
+
+def visitor_success(request):
+    return render(request, 'visitors/visitor_success.html')
 
 def history(request):
     if hasattr(request.user, 'role') and request.user.role == 'student':
