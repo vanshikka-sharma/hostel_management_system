@@ -9,6 +9,8 @@ def event_list(request):
 
 @login_required
 def event_create(request):
+    if hasattr(request.user, 'role') and request.user.role == 'student':
+        return redirect('event_list')
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
