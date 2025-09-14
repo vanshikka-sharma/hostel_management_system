@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Inter', Arial, sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 500px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        padding: 2rem 2.5rem;
+    }
+
+    h2 {
+        text-align: center;
+        color: #4f46e5;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.4rem;
+        color: #374151;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 0.7rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.7rem;
+        background: #f7f9fc;
+        font-size: 1rem;
+        transition: border-color 0.2s;
+    }
+
+    input:focus,
+    select:focus {
+        border-color: #6366f1;
+        outline: none;
+    }
+
+    .btn {
+        display: block;
+        width: 100%;
+        background: #6366f1;
+        color: #fff;
+        font-weight: 600;
+        padding: 0.9rem;
+        border: none;
+        border-radius: 0.7rem;
+        font-size: 1.1rem;
+        cursor: pointer;
+        margin-top: 1.2rem;
+        box-shadow: 0 5px 15px rgba(99, 102, 241, 0.08);
+        transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn:hover {
+        background: #4f46e5;
+        transform: scale(1.03);
+    }
+
+    .errorlist {
+        color: #dc2626;
+        margin-bottom: 1rem;
+        list-style: none;
+        padding: 0;
+    }
+
+    .message-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .message {
+        padding: 0.8rem 1rem;
+        border-radius: 0.7rem;
+        margin-bottom: 0.7rem;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+
+    .message.success {
+        background: #d1fae5;
+        color: #065f46;
+        border: 1px solid #10b981;
+    }
+
+    .message.error {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #ef4444;
+    }
+</style>
+<div class="container">
+    <h2>Register for Campus Hostel</h2>
+    {% if messages %}
+    <div class="message-section">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <form method="post" id="registrationForm">
+        {% csrf_token %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="errorlist">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
+        {{ form.non_field_errors }}
+        <div class="form-group">
+            <label for="id_username">Username</label>
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            <label for="id_name">Full Name</label>
+            {{ form.name }}
+        </div>
+        <div class="form-group">
+            <label for="id_adhaar_card_number">Adhaar Card Number</label>
+            {{ form.adhaar_card_number }}
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email</label>
+            {{ form.email }}
+        </div>
+        <div class="form-group">
+            <label for="id_phone_number">Phone Number</label>
+            {{ form.phone_number }}
+        </div>
+        <div class="form-group">
+            <label for="id_parents_name">Parents Name</label>
+            {{ form.parents_name }}
+        </div>
+        <div class="form-group">
+            <label for="id_parents_phone_number">Parents Phone Number</label>
+            {{ form.parents_phone_number }}
+        </div>
+        <div class="form-group">
+            <label for="id_city">City</label>
+            {{ form.city }}
+        </div>
+        <div class="form-group">
+            <label for="id_state">State</label>
+            {{ form.state }}
+        </div>
+        <div class="form-group">
+            <label for="id_alternate_phone_number">Alternate Phone Number</label>
+            {{ form.alternate_phone_number }}
+        </div>
+        <div class="form-group">
+            <label for="id_college_roll_no">College Roll No</label>
+            {{ form.college_roll_no }}
+        </div>
+        <div class="form-group">
+            <label for="id_branch">Branch</label>
+            {{ form.branch }}
+        </div>
+        <div class="form-group">
+            <label for="id_course">Course</label>
+            {{ form.course }}
+        </div>
+        <div class="form-group">
+            <label for="id_role">Role</label>
+            {{ form.role }}
+        </div>
+        <div class="form-group">
+            <label for="id_password">Password</label>
+            {{ form.password }}
+        </div>
+        <div class="form-group">
+            <label for="id_confirm_password">Confirm Password</label>
+            <input type="password" id="id_confirm_password" name="confirm_password" required>
+        </div>
+        <div id="passwordError" class="errorlist" style="display:none;"></div>
+        <button type="submit" class="btn">Register</button>
+    </form>
+    <!-- No custom JS validation, rely on HTML5 and server-side validation -->
+</div>
+{% endblock %}

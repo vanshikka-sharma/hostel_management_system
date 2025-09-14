@@ -1,19 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <navbar>
-        <div>
-            <p>Home</p>
-            <p>Mess</p>
-            <p>Attendence Sysyem</p>
-            <p></p>
-            <p></p>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+.navbar {
+    background: #4f46e5;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 1rem 0;
+}
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+.navbar-title {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.navbar-links {
+    display: flex;
+    gap: 2rem;
+}
+.navbar-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+.navbar-link:hover {
+    color: #c7d2fe;
+}
+</style>
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-title">Campus Hostel</div>
+        <div class="navbar-links">
+            <a href="#" class="navbar-link">Home</a>
+            <a href="#" class="navbar-link">Mess</a>
+            <a href="#" class="navbar-link">Attendance System</a>
+            <a href="#" class="navbar-link">Events</a>
+            <a href="#" class="navbar-link">Contact</a>
         </div>
-    </navbar>
-</body>
-</html>
+    </div>
+</nav>
