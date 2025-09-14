@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import User, HostelAllotment
+@admin.register(HostelAllotment)
+class HostelAllotmentAdmin(admin.ModelAdmin):
+	list_display = ('room_number', 'user', 'security_fees', 'allotment_fees', 'total_payable', 'created_at')
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):

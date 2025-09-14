@@ -24,3 +24,15 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.name} ({self.role})"
 
+
+# Hostel allotment model
+class HostelAllotment(models.Model):
+    room_number = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='hostel_allotments')
+    security_fees = models.DecimalField(max_digits=8, decimal_places=2)
+    allotment_fees = models.DecimalField(max_digits=8, decimal_places=2)
+    total_payable = models.DecimalField(max_digits=8, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Room {self.room_number} - {self.user.name}"
