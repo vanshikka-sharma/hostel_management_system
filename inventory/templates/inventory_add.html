@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Item</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-green-50 min-h-screen">
+    <div class="container mx-auto py-10 max-w-lg">
+        <h2 class="text-3xl font-bold mb-6 text-center">Add New Item</h2>
+        <form method="post" class="bg-white p-8 rounded shadow space-y-6">
+            {% csrf_token %}
+            <div>
+                <label class="block font-semibold mb-1">Name</label>
+                <input type="text" name="name" required class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block font-semibold mb-1">Category</label>
+                <select name="category" required class="w-full border rounded px-3 py-2">
+                    <option value="electric">Electrical</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="Mess">Mess</option>
+                    <option value="medical">Medical</option>
+                    <option value="misc">Miscellaneous</option>
+                </select>
+            </div>
+            <div>
+                <label class="block font-semibold mb-1">Price</label>
+                <input type="number" name="price" step="0.01" required class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block font-semibold mb-1">Quantity</label>
+                <input type="number" name="quantity" required class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block font-semibold mb-1">Purchase Date</label>
+                <input type="date" name="purchase_date" required class="w-full border rounded px-3 py-2">
+            </div>
+            <div class="flex justify-between items-center">
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded font-semibold">Save</button>
+                <a href="{% url 'inventory_main' %}" class="text-green-700 hover:underline">Back to Main</a>
+            </div>
+        </form>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mt-4 text-red-700 bg-red-100 p-2 rounded">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>
