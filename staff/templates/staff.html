@@ -7,8 +7,12 @@
   <title>Staff Management</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .colored-box { width: 100%; height: 150px; background-color: #a4b3c4; border-radius: 0.75rem; }
+    .colored-box { width: 100%; height: 150px; border-radius: 0.75rem; }
     .scroll-container { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; }
+    .day-bg { background-color: #e0f2fe; }
+    .night-bg { background-color: #334155; }
+    .day-card { background-color: #f8fafc; border: 2px solid #bae6fd; }
+    .night-card { background-color: #1e293b; border: 2px solid #334155; color: #f1f5f9; }
   </style>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800">
@@ -27,8 +31,8 @@
     <h3 class="text-2xl font-semibold mb-4">Security Staff</h3>
     <div class="scroll-container">
       {% for staff in security_staff %}
-      <div class="bg-white rounded-xl shadow p-4 min-w-[250px]">
-        <div class="colored-box mb-3"></div>
+      <div class="rounded-xl shadow p-4 min-w-[250px] {% if staff.shift == 'Night' %}night-card{% else %}day-card{% endif %}">
+        <div class="colored-box mb-3 {% if staff.shift == 'Night' %}night-bg{% else %}day-bg{% endif %}"></div>
         <h4 class="font-bold">{{ staff.name }}</h4>
         <p>{{ staff.address }}</p>
         <p>Shift: {{ staff.shift }}</p>
@@ -43,8 +47,8 @@
     <h3 class="text-2xl font-semibold mt-10 mb-4">Mess Staff</h3>
     <div class="scroll-container">
       {% for staff in mess_staff %}
-      <div class="bg-white rounded-xl shadow p-4 min-w-[250px]">
-        <div class="colored-box mb-3"></div>
+      <div class="rounded-xl shadow p-4 min-w-[250px] {% if staff.shift == 'Night' %}night-card{% else %}day-card{% endif %}">
+        <div class="colored-box mb-3 {% if staff.shift == 'Night' %}night-bg{% else %}day-bg{% endif %}"></div>
         <h4 class="font-bold">{{ staff.name }}</h4>
         <p>{{ staff.address }}</p>
         <p>Shift: {{ staff.shift }}</p>
@@ -59,8 +63,8 @@
     <h3 class="text-2xl font-semibold mt-10 mb-4">Management Staff</h3>
     <div class="scroll-container">
       {% for staff in management_staff %}
-      <div class="bg-white rounded-xl shadow p-4 min-w-[250px]">
-        <div class="colored-box mb-3"></div>
+      <div class="rounded-xl shadow p-4 min-w-[250px] {% if staff.shift == 'Night' %}night-card{% else %}day-card{% endif %}">
+        <div class="colored-box mb-3 {% if staff.shift == 'Night' %}night-bg{% else %}day-bg{% endif %}"></div>
         <h4 class="font-bold">{{ staff.name }}</h4>
         <p>{{ staff.address }}</p>
         <p>Shift: {{ staff.shift }}</p>
@@ -75,8 +79,8 @@
     <h3 class="text-2xl font-semibold mt-10 mb-4">Cleaning Staff</h3>
     <div class="scroll-container">
       {% for staff in cleaning_staff %}
-      <div class="bg-white rounded-xl shadow p-4 min-w-[250px]">
-        <div class="colored-box mb-3"></div>
+      <div class="rounded-xl shadow p-4 min-w-[250px] {% if staff.shift == 'Night' %}night-card{% else %}day-card{% endif %}">
+        <div class="colored-box mb-3 {% if staff.shift == 'Night' %}night-bg{% else %}day-bg{% endif %}"></div>
         <h4 class="font-bold">{{ staff.name }}</h4>
         <p>{{ staff.address }}</p>
         <p>Shift: {{ staff.shift }}</p>

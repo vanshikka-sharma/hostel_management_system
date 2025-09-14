@@ -1,26 +1,14 @@
 from django.db import models
-
-class Student(models.Model):
-    student_id = models.CharField(max_length=20, unique=True)
-    name = models.CharField(max_length=100)
-    room_no = models.CharField(max_length=10)
-
-    def __str__(self):
-        return f"{self.name} ({self.room_no})"
-
+from hostel.models import User
 
 class Attendance(models.Model):
-    STATUS_CHOICES = (
-        ('P', 'Present'),
-        ('A', 'Absent'),
-        ('L', 'Late'),
-        ('LV', 'On Leave'),
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='attendances')
+    date = models.DateField()
+    present = models.BooleanField(default=False)
 
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES)
-    remarks = models.TextField(blank=True, null=True)
+    class Meta:
+        unique_together = ('user', 'date')
 
     def __str__(self):
-        return f"{self.student.name} - {self.date} - {self.get_status_display()}"
+        return f"{self.user.name} - {self.date} - {'Present' if self.present else 'Absent'}"
+

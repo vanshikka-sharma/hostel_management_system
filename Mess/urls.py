@@ -2,9 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('menu',views.menu,name='menu'),
-    path('stocks',views.stocks,name='stocks'),
-    path('salaryPayments',views.salaryPayments,name='salaryPayments'),
-    path('messFees',views.messFees,name='messFees'),
-
+    path("", views.mess_timetable, name="mess_timetable"),
+    path("add/", views.add_menu, name="add_menu"),
+    path("update/<int:pk>/", views.add_menu, name="update_menu"),
+    path('inventory/', views.mess_inventory, name='mess_inventory'),
 ]

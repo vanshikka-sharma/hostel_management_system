@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Menu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <header class="bg-teal-600 text-white shadow-lg p-6">
+    <h1 class="text-3xl font-bold text-center">Add / Update Menu</h1>
+  </header>
+
+  <section class="container mx-auto px-6 py-10">
+    <form method="post" class="bg-white p-8 rounded-2xl shadow max-w-xl mx-auto space-y-6">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700">Save</button>
+    </form>
+  </section>
+
+</body>
+</html>

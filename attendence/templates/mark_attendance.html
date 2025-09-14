@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.attendance-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80vh;
+    background: linear-gradient(120deg, #e0e7ff 0%, #f0fdfa 100%);
+    padding-top: 40px;
+}
+.attendance-card {
+    background: #fff;
+    border-radius: 2rem;
+    box-shadow: 0 8px 32px rgba(79,70,229,0.10);
+    width: 100%;
+    max-width: 520px;
+    padding: 2.5rem 2rem 2rem 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+.attendance-title {
+    text-align: center;
+    color: #4f46e5;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+.attendance-date-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 2.2rem;
+}
+.attendance-date-row label {
+    font-weight: 600;
+    color: #6366f1;
+    font-size: 1.1rem;
+}
+.attendance-date-row input {
+    border: 1px solid #c7d2fe;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background: #f3f4f6;
+    color: #374151;
+    outline: none;
+    transition: border 0.2s;
+}
+.attendance-date-row input:focus {
+    border: 1.5px solid #4f46e5;
+}
+.attendance-list {
+    max-height: 340px;
+    overflow-y: auto;
+    margin-bottom: 2.2rem;
+    background: #f8fafc;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(79,70,229,0.05);
+    padding: 1rem 0.5rem;
+}
+.attendance-list ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.attendance-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 1.08rem;
+}
+.attendance-list li:last-child {
+    border-bottom: none;
+}
+.attendance-checkbox {
+    width: 1.3rem;
+    height: 1.3rem;
+    accent-color: #4f46e5;
+}
+.attendance-btn {
+    width: 100%;
+    background: linear-gradient(90deg, #6366f1 0%, #06b6d4 100%);
+    color: #fff;
+    font-weight: 700;
+    padding: 0.85rem;
+    border-radius: 1rem;
+    font-size: 1.15rem;
+    box-shadow: 0 2px 8px rgba(79,70,229,0.10);
+    border: none;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: background 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+.attendance-btn:hover {
+    background: linear-gradient(90deg, #4338ca 0%, #0ea5e9 100%);
+    box-shadow: 0 4px 16px rgba(79,70,229,0.15);
+}
+.show-attendance-btn {
+    display: block;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+    background: linear-gradient(90deg, #06b6d4 0%, #6366f1 100%);
+    color: #fff;
+    font-weight: 700;
+    padding: 0.8rem 2.2rem;
+    border-radius: 1rem;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(6,182,212,0.10);
+    border: none;
+    transition: background 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+.show-attendance-btn:hover {
+    background: linear-gradient(90deg, #0ea5e9 0%, #4338ca 100%);
+    box-shadow: 0 4px 16px rgba(6,182,212,0.15);
+}
+</style>
+<div class="attendance-container">
+    <div class="attendance-card">
+        <div class="attendance-title">Mark Attendance</div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="attendance-date-row">
+                <label for="id_date">Date:</label>
+                {{ form.date }}
+            </div>
+            <div class="attendance-list">
+                <ul>
+                    {% for student in students %}
+                    <li>
+                        <span class="font-semibold">{{ student.name }}</span>
+                        <input type="checkbox" name="present_{{ student.id }}" class="attendance-checkbox">
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <button type="submit" class="attendance-btn">Save Attendance</button>
+        </form>
+    </div>
+        <a href="{% url 'attendance:attendance_list' %}" class="show-attendance-btn">Show Attendance</a>
+</div>
+{% endblock %}
