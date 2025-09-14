@@ -13,6 +13,10 @@ CATEGORY_COLORS = {
 }
 
 def inventory_main(request):
+    user = request.user
+    if user.is_authenticated and getattr(user, 'role', None) == 'student':
+        messages.info(request, 'Students cannot access inventory pages.')
+        return redirect('home')
     items = Item.objects.all().order_by('-created_at')
     for item in items:
         item.color_class = CATEGORY_COLORS.get(item.category, 'bg-gray-100 text-gray-800')
@@ -20,6 +24,10 @@ def inventory_main(request):
     return render(request, 'inventory_main.html', {'items': items})
 
 def inventory_add(request):
+    user = request.user
+    if user.is_authenticated and getattr(user, 'role', None) == 'student':
+        messages.info(request, 'Students cannot access inventory pages.')
+        return redirect('home')
     if request.method == 'POST':
         name = request.POST.get('name')
         category = request.POST.get('category')
@@ -41,6 +49,10 @@ def inventory_add(request):
     return render(request, 'inventory_add.html')
 
 def inventory_usage(request):
+    user = request.user
+    if user.is_authenticated and getattr(user, 'role', None) == 'student':
+        messages.info(request, 'Students cannot access inventory pages.')
+        return redirect('home')
     items = Item.objects.all()
     if request.method == 'POST':
         item_id = request.POST.get('item_id')
