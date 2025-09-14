@@ -1,0 +1,35 @@
+{% extends "staff/base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-3 p-3">
+      <h5>Create Shift</h5>
+      <form method="post">{% csrf_token %}
+        {{ shift_form.as_p }}
+        <button name="create_shift" class="btn btn-success">Create Shift</button>
+      </form>
+    </div>
+
+    <div class="card mb-3 p-3">
+      <h5>Assign Staff to Shift</h5>
+      <form method="post">{% csrf_token %}
+        {{ assign_form.as_p }}
+        <button name="assign_shift" class="btn btn-primary">Assign</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <h5>Upcoming Assignments</h5>
+    {% for a in upcoming %}
+      <div class="card mb-2">
+        <div class="card-body">
+          <strong>{{ a.date }}</strong> — {{ a.shift.name }} — {{ a.staff }}
+        </div>
+      </div>
+    {% empty %}
+      <p>No upcoming assignments.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

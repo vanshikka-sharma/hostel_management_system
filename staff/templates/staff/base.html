@@ -1,0 +1,42 @@
+{% extends "staff/base.html" %}
+{% block content %}
+<h3>All Staff</h3>
+
+<form class="row g-2 mb-3">
+  <div class="col-auto">
+    <input name="q" value="{{ query }}" class="form-control" placeholder="Search name or phone">
+  </div>
+  <div class="col-auto">
+    <select name="type" class="form-select">
+      <option value="">All types</option>
+      {% for val,label in types %}
+        <option value="{{ val }}" {% if selected_type == val %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-auto"><button class="btn btn-primary">Filter</button></div>
+</form>
+
+<div class="row">
+  {% for s in staff_list %}
+    <div class="col-md-4 mb-3">
+      <div class="card h-100">
+        {% if s.photo %}
+        <img src="{{ s.photo.url }}" class="card-img-top" style="height:200px;object-fit:cover">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ s.first_name }} {{ s.last_name }}</h5>
+          <p class="card-text">
+            <strong>Type:</strong> {{ s.get_staff_type_display }}<br>
+            <strong>Phone:</strong> {{ s.phone }}<br>
+            <strong>Joined:</strong> {{ s.date_of_joining }}
+          </p>
+          <a class="btn btn-sm btn-outline-primary" href="{% url 'staff:staff_edit' s.pk %}">Edit</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>No staff found.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "staff/base.html" %}
+{% block content %}
+<h3>Shifts for {{ selected_date }}</h3>
+
+<form class="mb-3 row g-2">
+  <div class="col-auto">
+    <input type="date" name="date" class="form-control" value="{{ selected_date|date:'Y-m-d' }}">
+  </div>
+  <div class="col-auto"><button class="btn btn-primary">Show</button></div>
+</form>
+
+{% for shift, assignments in shift_map.items %}
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5>{{ shift.name }} — {{ shift.start_time }} to {{ shift.end_time }}</h5>
+      <p>{{ shift.description }}</p>
+      <h6>Assigned:</h6>
+      {% if assignments %}
+        <ul>
+          {% for a in assignments %}
+            <li>{{ a.staff }} ({{ a.staff.get_staff_type_display }}) — notes: {{ a.notes }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-muted">No one assigned.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}
