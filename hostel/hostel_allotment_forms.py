@@ -5,8 +5,20 @@ class HostelAllotmentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['user'].queryset = User.objects.filter(role='student')
-    security_fees = forms.DecimalField(max_digits=8, decimal_places=2)
-    allotment_fees = forms.DecimalField(max_digits=8, decimal_places=2)
+        # Add classes to all fields
+        for field in self.fields.values():
+            field.widget.attrs.update({
+                'class': 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500'
+            })
+
+    security_fees = forms.DecimalField(
+        max_digits=8, 
+        decimal_places=2,
+    )
+    allotment_fees = forms.DecimalField(
+        max_digits=8, 
+        decimal_places=2,
+    )
 
     class Meta:
         model = HostelAllotment

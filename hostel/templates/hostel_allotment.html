@@ -1,90 +1,67 @@
 {% extends 'base.html' %}
 {% block content %}
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-.allotment-form {
-    max-width: 480px;
-    margin: 48px auto;
-    background: #fff;
-    border-radius: 1.5rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.07);
-    padding: 2.5rem 2.5rem 2rem 2.5rem;
-    font-family: 'Inter', Arial, sans-serif;
-}
-.allotment-form h2 {
-    text-align: center;
-    color: #4f46e5;
-    font-size: 2.1rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    letter-spacing: 1px;
-}
-.form-group {
-    margin-bottom: 1.3rem;
-}
-label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 0.4rem;
-    color: #374151;
-    font-size: 1.05rem;
-}
-input, select {
-    width: 100%;
-    padding: 0.7rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.7rem;
-    background: #f7f9fc;
-    font-size: 1rem;
-    transition: border-color 0.2s;
-}
-input:focus, select:focus {
-    border-color: #6366f1;
-    outline: none;
-}
-.btn {
-    display: block;
-    width: 100%;
-    background: linear-gradient(90deg, #6366f1 60%, #4f46e5 100%);
-    color: #fff;
-    font-weight: 600;
-    padding: 0.95rem;
-    border: none;
-    border-radius: 0.7rem;
-    font-size: 1.15rem;
-    cursor: pointer;
-    margin-top: 1.5rem;
-    box-shadow: 0 5px 15px rgba(99,102,241,0.10);
-    transition: background 0.2s, transform 0.2s;
-    letter-spacing: 0.5px;
-}
-.btn:hover {
-    background: linear-gradient(90deg, #4f46e5 60%, #6366f1 100%);
-    transform: scale(1.03);
-}
-.form-title {
-    text-align: center;
-    color: #6366f1;
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin-bottom: 1.2rem;
-}
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 </style>
-<div class="allotment-form">
-    <h2>Hostel Allotment for Room {{ room_number }}</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-title">Fill the details below to allot this room</div>
-        {% for field in form %}
-            <div class="form-group">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field }}
-                {% if field.errors %}
-                    <div class="errorlist">{{ field.errors|striptags }}</div>
-                {% endif %}
+
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+        <!-- Header Section -->
+        <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-t-2xl shadow-lg px-8 py-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-white">Room Allotment</h1>
+                    <p class="mt-1 text-indigo-100">Room Number: {{ room_number }}</p>
+                </div>
+                <span class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium bg-indigo-800 text-white">
+                    <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    Room Assignment
+                </span>
             </div>
-        {% endfor %}
-        <button type="submit" class="btn">Allot Room</button>
-    </form>
+        </div>
+
+        <!-- Form Section -->
+        <div class="bg-white shadow-lg rounded-b-2xl">
+            <form method="post" class="p-8 space-y-6">
+                {% csrf_token %}
+                
+                <div class="bg-indigo-50 rounded-xl p-4 mb-6">
+                    <div class="flex items-center">
+                        <svg class="h-5 w-5 text-indigo-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p class="text-sm text-indigo-700 font-medium">Please fill in the details below to complete the room allotment</p>
+                    </div>
+                </div>
+
+                {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                        {{ field.label }}
+                    </label>
+                    <div class="mt-1">
+                        {{ field }}
+                    </div>
+                    {% if field.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ field.errors|striptags }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="pt-4">
+                    <button type="submit" 
+                            class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 transform hover:scale-[1.02]">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Complete Room Allotment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
