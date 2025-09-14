@@ -42,9 +42,11 @@
             <a href="#" class="navbar-link">Home</a>
             <a href="/Mess/" class="navbar-link">Mess</a>
             <a href="/parcel/history/" class="navbar-link">Parcel</a>
-            <a href="#" class="navbar-link">Attendance System</a>
+            {% if not request.user.role == 'student' %}
+            <a href="/staff/" class="navbar-link">Staff</a>
+            {% endif %}
+            <a href="#" class="navbar-link">Attendance</a>
             <a href="#" class="navbar-link">Events</a>
-            <a href="#" class="navbar-link">Contact</a>
         </div>
     </div>
 </nav>

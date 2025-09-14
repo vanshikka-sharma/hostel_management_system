@@ -3,6 +3,8 @@ from .forms import VisitorRecordForm
 from .models import VisitorRecord
 
 def record_visitor(request):
+    if hasattr(request.user, 'role') and request.user.role == 'student':
+        return redirect('home')
     if request.method == 'POST':
         form = VisitorRecordForm(request.POST)
         if form.is_valid():
@@ -16,6 +18,8 @@ from django.utils import timezone
 from datetime import datetime
 
 def history(request):
+    if hasattr(request.user, 'role') and request.user.role == 'student':
+        return redirect('home')
     selected_date = request.GET.get('date')
     visitors = []
     if not selected_date:

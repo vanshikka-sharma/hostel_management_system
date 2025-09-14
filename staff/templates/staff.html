@@ -23,9 +23,11 @@
   </header>
 
   <section class="container mx-auto px-6 py-10">
+    {% if not request.user.role == 'student' %}
     <div class="flex justify-center space-x-6 mb-12">
       <a href="{% url 'add_member' %}" class="bg-indigo-600 text-white px-6 py-3 rounded-full shadow hover:bg-indigo-700">Add Members</a>
     </div>
+    {% endif %}
 
     <!-- Security Staff -->
     <h3 class="text-2xl font-semibold mb-4">Security Staff</h3>
@@ -34,9 +36,11 @@
       <div class="rounded-xl shadow p-4 min-w-[250px] {% if staff.shift == 'Night' %}night-card{% else %}day-card{% endif %}">
         <div class="colored-box mb-3 {% if staff.shift == 'Night' %}night-bg{% else %}day-bg{% endif %}"></div>
         <h4 class="font-bold">{{ staff.name }}</h4>
-        <p>{{ staff.address }}</p>
-        <p>Shift: {{ staff.shift }}</p>
-        <a href="{% url 'shift_member' staff.id %}" class="text-indigo-600 text-sm">Shift/Edit</a>
+  <p>{{ staff.address }}</p>
+  <p>Shift: {{ staff.shift }}</p>
+  {% if not request.user.role == 'student' %}
+  <a href="{% url 'shift_member' staff.id %}" class="text-indigo-600 text-sm">Shift/Edit</a>
+  {% endif %}
       </div>
       {% empty %}
       <p>No staff available</p>

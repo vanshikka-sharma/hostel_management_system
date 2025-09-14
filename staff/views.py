@@ -15,6 +15,8 @@ def staff_home(request):
     })
 
 def add_member(request):
+    if hasattr(request.user, 'role') and request.user.role == 'student':
+        return redirect('staff_home')
     if request.method == 'POST':
         form = StaffForm(request.POST)
         if form.is_valid():
@@ -25,6 +27,8 @@ def add_member(request):
     return render(request, 'add_members.html', {'form': form})
 
 def shift_member(request, pk):
+    if hasattr(request.user, 'role') and request.user.role == 'student':
+        return redirect('staff_home')
     staff = get_object_or_404(StaffMember, pk=pk)
     if request.method == 'POST':
         form = StaffForm(request.POST, instance=staff)
