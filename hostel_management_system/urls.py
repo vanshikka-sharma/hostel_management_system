@@ -24,7 +24,7 @@ urlpatterns = [
     path('hostel/', include('hostel.urls')),
     path('finance/', include('finance.urls')),
     path('application/', include('application.urls')),
-    path('/', include('attendence.urls')),
+    path('attendence/', include('attendence.urls')),
     path('complaint/', include('complaint.urls')),
     path('hostel/', include('hostel.urls')),
     path('event/', include('event.urls')),

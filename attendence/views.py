@@ -1,36 +1,53 @@
 from django.shortcuts import render, redirect
-from django.utils import timezone
-from .models import Student, Attendance
+from .models import Attendance
+from hostel.models import User
+from django import forms
+
+class AttendanceDateForm(forms.Form):
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
+def attendance_list(request):
+    date = request.GET.get('date')
+    if date:
+        attendances = Attendance.objects.filter(date=date).select_related('user')
+    else:
+        attendances = Attendance.objects.none()
+    form = AttendanceDateForm(initial={'date': date})
+    # Prepare attendance_records for template
+    attendance_records = []
+    for attendance in attendances:
+        attendance_records.append({
+            'student': attendance.user,
+            'present': attendance.present
+        })
+    return render(request, 'attendance_list.html', {
+        'form': form,
+        'attendance_records': attendance_records,
+        'date': date,
+    })
 
 def mark_attendance(request):
-    students = Student.objects.all()
-    if request.method == "POST":
-        for student in students:
-            status = request.POST.get(f'status_{student.id}')
-            remarks = request.POST.get(f'remarks_{student.id}')
-            Attendance.objects.create(
-                student=student,
-                date=timezone.now().date(),
-                status=status,
-                remarks=remarks
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        for user in User.objects.filter(role='student'):
+            present = request.POST.get(f'present_{user.id}') == 'on'
+            Attendance.objects.update_or_create(
+                user=user, date=date,
+                defaults={'present': present}
             )
-        return redirect('view_attendance')
-    return render(request, 'attendence/templates/mark_attendence.html', {'students': students})
+        return redirect(f'/attendence/?date={date}')
+    else:
+        form = AttendanceDateForm()
+        students = User.objects.filter(role='student')
+        return render(request, 'mark_attendance.html', {
+            'form': form,
+            'students': students,
+        })
 
-
-def view_attendance(request):
-    today = timezone.now().date()
-    records = Attendance.objects.filter(date=today)
-
-    total_students = records.count()
-    present_count = records.filter(status='P').count()
-    absent_count = records.filter(status='A').count()
-
-    return render(request, 'attendence/templates/view_attendence.html', {
-        'records': records,
-        'total': total_students,
-        'present': present_count,
-        'absent': absent_count,
-        'date': today
+def attendance_all(request):
+    all_attendance = Attendance.objects.select_related('user').order_by('-date')
+    return render(request, 'attendance_all.html', {
+        'all_attendance': all_attendance,
     })
+
 
