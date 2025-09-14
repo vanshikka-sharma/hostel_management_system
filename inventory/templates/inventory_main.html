@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto py-10">
+        <h1 class="text-4xl font-bold mb-8 text-center">Inventory Dashboard</h1>
+        <div class="flex justify-center mb-6 gap-4">
+            <a href="{% url 'inventory_add' %}" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded shadow font-semibold">Add Item</a>
+            <a href="{% url 'inventory_usage' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded shadow font-semibold">Record Usage</a>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 text-green-700 bg-green-100 p-2 rounded">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        <table class="min-w-full bg-white rounded shadow mb-10">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4">Name</th>
+                    <th class="py-2 px-4">Category</th>
+                    <th class="py-2 px-4">Price</th>
+                    <th class="py-2 px-4">Quantity</th>
+                    <th class="py-2 px-4">Total Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr class="{{ item.color_class }}">
+                    <td class="py-2 px-4 font-bold">{{ item.name }}</td>
+                    <td class="py-2 px-4">{{ item.get_category_display }}</td>
+                    <td class="py-2 px-4">₹{{ item.price }}</td>
+                    <td class="py-2 px-4">{{ item.quantity }}</td>
+                    <td class="py-2 px-4 font-semibold">₹{{ item.total_value }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-gray-500">No items in inventory.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="min-w-full bg-white rounded shadow">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4">Name</th>
+                    <th class="py-2 px-4">Category</th>
+                    <th class="py-2 px-4">Price</th>
+                    <th class="py-2 px-4">Quantity</th>
+                    <th class="py-2 px-4">Purchase Date</th>
+                    <th class="py-2 px-4">Total Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr class="{{ item.color_class }}">
+                    <td class="py-2 px-4 font-bold">{{ item.name }}</td>
+                    <td class="py-2 px-4">{{ item.get_category_display }}</td>
+                    <td class="py-2 px-4">₹{{ item.price }}</td>
+                    <td class="py-2 px-4">{{ item.quantity }}</td>
+                    <td class="py-2 px-4">{{ item.purchase_date }}</td>
+                    <td class="py-2 px-4 font-semibold">₹{{ item.total_value }}</td>
+                </tr>
+                {% if item.usages.all %}
+                {% for usage in item.usages.all %}
+                <tr class="border-t border-gray-300 bg-indigo-100 text-indigo-800">
+                    <td class="py-2 px-4">{{ item.name }} <span class="italic text-xs">(Usage)</span></td>
+                    <td class="py-2 px-4">{{ item.get_category_display }}</td>
+                    <td class="py-2 px-4">-</td>
+                    <td class="py-2 px-4">Used: {{ usage.used_quantity }}</td>
+                    <td class="py-2 px-4">{{ usage.used_on }}</td>
+                    <td class="py-2 px-4">Notes: {{ usage.notes }}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center py-4 text-gray-500">No usage records available.</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

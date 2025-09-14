@@ -1,45 +1,45 @@
 from django.db import models
-from django.utils import timezone
 
-
-class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    description = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
-class InventoryItem(models.Model):
+class Item(models.Model):
+    # No custom save method needed
+    # No custom save method needed
+    # No custom save method needed
+    CATEGORY_CHOICES = [
+        ('electric','Electrical'),
+        ('furniture','Furniture'),
+        ('Mess','Mess'),
+        ('medical','Medical'),
+        ('misc','Miscellaneous'),
+    ]
     name = models.CharField(max_length=200)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="items")
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='misc')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=0)
-    purchase_date = models.DateField(default=timezone.now)
+    purchase_date = models.DateField()
 
-    def __str__(self):
-        return f"{self.name} ({self.quantity} available)"
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def total_value(self):
         return self.price * self.quantity
 
-
-class UsageRecord(models.Model):
-    item = models.ForeignKey(InventoryItem, on_delete=models.CASCADE, related_name="usage_records")
-    used_quantity = models.PositiveIntegerField()
-    used_on = models.DateField(default=timezone.now)
-    notes = models.TextField(blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        # reduce inventory quantity when usage is recorded
-        if self.pk is None:  # only reduce on new record
-            if self.item.quantity >= self.used_quantity:
-                self.item.quantity -= self.used_quantity
-                self.item.save()
-            else:
-                raise ValueError("Not enough stock available!")
-        super().save(*args, **kwargs)
+    # No custom save method needed
 
     def __str__(self):
-        return f"Used {self.used_quantity} of {self.item.name} on {self.used_on}"
+        return f"{self.name} ({self.category})"
+
+class UsageRecord(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='usages')
+    used_quantity = models.PositiveIntegerField()
+    used_on = models.DateField()
+    notes = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        # Subtract used_quantity from item.quantity when usage is recorded
+        if not self.pk:
+            if self.used_quantity > self.item.quantity:
+                raise ValueError("Used quantity cannot be greater than available quantity.")
+            self.item.quantity -= self.used_quantity
+            self.item.save()
+        super().save(*args, **kwargs)
 
