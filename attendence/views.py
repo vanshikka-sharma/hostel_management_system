@@ -2,16 +2,16 @@ from django.shortcuts import render, redirect
 from .models import Attendance
 from hostel.models import User
 from django import forms
+from datetime import date as dt_date
 
 class AttendanceDateForm(forms.Form):
     date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 
 def attendance_list(request):
     date = request.GET.get('date')
-    if date:
-        attendances = Attendance.objects.filter(date=date).select_related('user')
-    else:
-        attendances = Attendance.objects.none()
+    if not date:
+        date = dt_date.today().isoformat()
+    attendances = Attendance.objects.filter(date=date).select_related('user')
     form = AttendanceDateForm(initial={'date': date})
     # Prepare attendance_records for template
     attendance_records = []
