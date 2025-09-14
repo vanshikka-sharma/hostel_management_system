@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in items %}
+                    {% for item in items %}
                 <tr class="{{ item.color_class }}">
                     <td class="py-2 px-4 font-bold">{{ item.name }}</td>
                     <td class="py-2 px-4">{{ item.get_category_display }}</td>
@@ -38,11 +38,23 @@
                     <td class="py-2 px-4">{{ item.purchase_date }}</td>
                     <td class="py-2 px-4 font-semibold">₹{{ item.total_value }}</td>
                 </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6" class="text-center py-4 text-gray-500">No items in inventory.</td>
-                </tr>
-                {% endfor %}
+                    {% if item.usages.all %}
+                    {% for usage in item.usages.all %}
+                    <tr class="border-t border-gray-300 bg-indigo-100 text-indigo-800">
+                        <td class="py-2 px-4">{{ item.name }} <span class="italic text-xs">(Usage)</span></td>
+                        <td class="py-2 px-4">{{ item.get_category_display }}</td>
+                        <td class="py-2 px-4">-</td>
+                        <td class="py-2 px-4">Used: {{ usage.used_quantity }}</td>
+                        <td class="py-2 px-4">{{ usage.used_on }}</td>
+                        <td class="py-2 px-4">Notes: {{ usage.notes }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-gray-500">No usage records available.</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
             </tbody>
         </table>
     </div>

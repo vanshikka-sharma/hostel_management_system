@@ -29,12 +29,9 @@ class UsageRecord(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        # reduce the item quantity when usage is recorded
+        # Only save usage record, do not modify item quantity
         if not self.pk:
-            # only reduce on first save (new record)
             if self.used_quantity > self.item.quantity:
                 raise ValueError("Used quantity cannot be greater than available quantity.")
-            self.item.quantity = self.item.quantity - self.used_quantity
-            self.item.save()
         super().save(*args, **kwargs)
 
