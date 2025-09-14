@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout as django_logout
 # Create your views here.
 def navbar(request):
     return render(request, 'navbar.html')
@@ -21,10 +22,8 @@ def login_view(request):
             return render(request, 'login.html')
     return render(request, 'login.html')
 
-def logout_view(request):
-    """Handles user logout."""
-    logout(request)
-    messages.success(request, "You have been logged out.")
+def logout(request):
+    django_logout(request)
     return redirect('login')
 
 def home(request):
