@@ -9,12 +9,15 @@ def navbar(request):
 def login_view(request):
     """Handles user login."""
     if request.method == 'POST':
-        # This is where you would process the form data from your HTML
-        # In a real app, you would use a Django form and check for a valid user
-        # For this example, we'll just print to the console
-        print(f"Login attempt for user: {request.POST.get('username')}")
-        return redirect('dashboard')  # Redirect to a dashboard on success
-    return render(request, 'login.html') # The HTML file you provided
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')  # Redirect to home or dashboard
+        else:
+            return render(request, 'login.html', {'form': {'errors': True}})
+    return render(request, 'login.html')
 
 def logout_view(request):
     """Handles user logout."""

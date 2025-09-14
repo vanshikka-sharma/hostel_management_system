@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="login-container" style="max-width:400px;margin:40px auto;padding:32px;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    <h2 style="text-align:center;margin-bottom:24px;color:#333;">Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div style="margin-bottom:18px;">
+            <label for="username" style="display:block;margin-bottom:6px;color:#555;">Username</label>
+            <input type="text" id="username" name="username" class="form-control" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:4px;" required>
+        </div>
+        <div style="margin-bottom:18px;">
+            <label for="password" style="display:block;margin-bottom:6px;color:#555;">Password</label>
+            <input type="password" id="password" name="password" class="form-control" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:4px;" required>
+        </div>
+        <button type="submit" style="width:100%;padding:10px;background:#007bff;color:#fff;border:none;border-radius:4px;font-size:16px;cursor:pointer;">Login</button>
+    </form>
+    {% if form.errors %}
+    <div style="margin-top:16px;color:#d9534f;text-align:center;">
+        Invalid username or password.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
