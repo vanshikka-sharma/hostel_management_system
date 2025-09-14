@@ -18,3 +18,9 @@ def register(request):
     return render(request, 'registration.html', {'form': form})
 
 
+
+def room_allotment(request):
+    rooms = list(range(501, 551))
+    return render(request, 'room_grid.html', {'rooms': rooms})
+
+
