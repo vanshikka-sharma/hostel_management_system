@@ -14,9 +14,11 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')  # Redirect to home or dashboard
+            messages.success(request, f"Welcome, {user.name}!")
+            return redirect('home')
         else:
-            return render(request, 'login.html', {'form': {'errors': True}})
+            messages.error(request, "Invalid username or password.")
+            return render(request, 'login.html')
     return render(request, 'login.html')
 
 def logout_view(request):

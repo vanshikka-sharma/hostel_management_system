@@ -13,6 +13,10 @@ def room_list(request):
 from .models import HostelAllotment, User
 from .hostel_allotment_forms import HostelAllotmentForm
 def hostel_allotment(request, pk):
+    user = request.user
+    if user.is_authenticated and getattr(user, 'role', None) == 'student':
+        messages.info(request, 'Students cannot access the hostel allotment page.')
+        return redirect('home')
     room_number = pk
     if request.method == 'POST':
         form = HostelAllotmentForm(request.POST)
@@ -34,6 +38,10 @@ from .forms import RegistrationForm
 
 
 def register(request):
+    user = request.user
+    if user.is_authenticated and getattr(user, 'role', None) == 'student':
+        messages.info(request, 'Students cannot access the registration page.')
+        return redirect('home')
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -49,6 +57,10 @@ def register(request):
 
 
 def room_allotment(request):
+    user = request.user
+    if user.is_authenticated and getattr(user, 'role', None) == 'student':
+        messages.info(request, 'Students cannot access the room allotment page.')
+        return redirect('home')
     rooms = list(range(501, 551))
     return render(request, 'room_grid.html', {'rooms': rooms})
 

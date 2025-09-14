@@ -81,7 +81,9 @@
                     {% for user in room.users %}
                         <div class="user-item">
                             <strong>Name:</strong> {{ user.name }}<br>
-                            <strong>Phone:</strong> <span class="user-phone">{{ user.phone }}</span><br>
+                            {% if not request.user.is_authenticated or request.user.role != 'student' %}
+                                <strong>Phone:</strong> <span class="user-phone">{{ user.phone }}</span><br>
+                            {% endif %}
                         </div>
                     {% empty %}
                         <div class="user-item" style="color:#991b1b;">No user allotted</div>
