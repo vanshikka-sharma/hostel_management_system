@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="max-width:500px;margin:40px auto;padding:32px;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    <h2>{{ event.title }}</h2>
+    <p>{{ event.description }}</p>
+    <p><strong>Date:</strong> {{ event.date }} <strong>Time:</strong> {{ event.time }}</p>
+    <hr>
+    <h4>Voting</h4>
+    {% if user.is_authenticated %}
+        {% if user_vote %}
+            <p>You voted: <strong>{% if user_vote.is_participating %}Yes{% else %}No{% endif %}</strong></p>
+        {% else %}
+            <form method="post" action="{% url 'event_vote' event.id %}">
+                {% csrf_token %}
+                <label>Will you participate?</label><br>
+                <button type="submit" name="is_participating" value="yes" class="btn btn-success">Yes</button>
+                <button type="submit" name="is_participating" value="no" class="btn btn-danger">No</button>
+            </form>
+        {% endif %}
+    {% else %}
+        <p><a href="/login/">Login</a> to vote.</p>
+    {% endif %}
+    <hr>
+    <p><strong>Yes:</strong> {{ votes_yes }} | <strong>No:</strong> {{ votes_no }}</p>
+    <h5 style="margin-top:24px;">All Student Votes</h5>
+    <table style="width:100%;margin-bottom:20px;border-collapse:collapse;">
+        <thead>
+            <tr style="background:#f5f5f5;">
+                <th style="padding:8px;border:1px solid #ddd;">Student ID</th>
+                <th style="padding:8px;border:1px solid #ddd;">Vote</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vote in all_votes %}
+            <tr>
+                <td style="padding:8px;border:1px solid #ddd;">{{ vote.user.username }}</td>
+                <td style="padding:8px;border:1px solid #ddd;">{% if vote.is_participating %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="2" style="text-align:center;">No votes yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'event_list' %}" class="btn btn-secondary">Back to Events</a>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .container {
+        max-width: 500px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        padding: 2rem 2.5rem;
+    }
+    h2 {
+        text-align: center;
+        color: #4f46e5;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+    label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.4rem;
+        color: #374151;
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 0.7rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.7rem;
+        background: #f7f9fc;
+        font-size: 1rem;
+        transition: border-color 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+        border-color: #6366f1;
+        outline: none;
+    }
+    .btn {
+        display: block;
+        width: 100%;
+        background: #6366f1;
+        color: #fff;
+        font-weight: 600;
+        padding: 0.9rem;
+        border: none;
+        border-radius: 0.7rem;
+        font-size: 1.1rem;
+        cursor: pointer;
+        margin-top: 1.2rem;
+        box-shadow: 0 5px 15px rgba(99, 102, 241, 0.08);
+        transition: background 0.2s, transform 0.2s;
+    }
+    .btn:hover {
+        background: #4f46e5;
+        transform: scale(1.03);
+    }
+</style>
+<div class="container">
+    <h2>Submit Complaint</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="room_no">Room No</label>
+            <input type="text" id="room_no" name="room_no" required>
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+                <option value="electric">Electrical</option>
+                <option value="furniture">Furniture</option>
+                <option value="Mess">Mess</option>
+                <option value="medical">Medical</option>
+                <option value="misc">Miscellaneous</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+        <button type="submit" class="btn">Submit</button>
+    </form>
+    <div style="margin-top:20px;text-align:center;">
+        <a href="{% url 'complaint_status' %}" class="btn" style="background:#007bff;">View Complaint Status</a>
+    </div>
+</div>
+{% endblock %}
