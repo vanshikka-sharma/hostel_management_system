@@ -1,3 +1,15 @@
+def room_list(request):
+    # Get all room allotments, group by room number
+    from collections import defaultdict
+    rooms = defaultdict(list)
+    for allotment in HostelAllotment.objects.select_related('user').order_by('room_number'):
+        rooms[allotment.room_number].append(allotment)
+    room_data = []
+    for room_number, allotments in rooms.items():
+        users = [{'name': a.user.name, 'phone': a.user.phone_number} for a in allotments]
+        room_data.append({'room_number': room_number, 'users': users})
+    room_data.sort(key=lambda x: x['room_number'])
+    return render(request, 'room_list.html', {'room_data': room_data})
 from .models import HostelAllotment, User
 from .hostel_allotment_forms import HostelAllotmentForm
 def hostel_allotment(request, pk):
